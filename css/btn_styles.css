@@ -1,0 +1,23 @@
+.btn-more,
+.btn-minus {
+  color: magenta;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-more:hover {
+  color: green;
+  border-radius: 50px;
+  box-shadow: 0px 0px 10px lightblue;
+}
+
+.btn-remove {
+  color: rgb(207, 58, 58);
+}
+
+.btn-remove:hover {
+  color: red;
+}
