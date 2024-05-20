@@ -17,7 +17,7 @@ const CustomCheckBox: React.FC<CustomCheckBoxProps> = ({
   register,
 }) => {
   return (
-    <div className="w-full flex flex-row gap-2 items-center">
+    <div className="w-full flex flex-row gap-2 items-center hover:text-rose-500">
       <input
         type="checkbox"
         id={id}
