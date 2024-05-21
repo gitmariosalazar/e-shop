@@ -6,6 +6,7 @@ import SetColor from "@/app/components/products/SetColor";
 import SetQuantity from "@/app/components/products/SetQuantity";
 import { useCart } from "@/hooks/useCart";
 import { ToastCustom } from "@/utils/ToastMessage";
+import { formatPrice } from "@/utils/formatPrice";
 import { Rating } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -131,10 +132,20 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           {product.category}
         </div>
         <div>
+          <span className="font-semibold">PRICE: </span>
+          {formatPrice(product.price)}
+        </div>
+        <div>
           <span className="font-semibold">BRAND: </span>
           {product.brand}
         </div>
-        <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
+        <div
+          className={
+            product.inStock
+              ? "text-teal-400 font-bold"
+              : "text-rose-400 font-bold"
+          }
+        >
           {product.inStock ? "In Stock" : "Out of Stock"}
         </div>
         <Horizontal></Horizontal>

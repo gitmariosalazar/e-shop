@@ -47,4 +47,10 @@ export const colors = [
     colorCode: "#FFFFFF",
     image: null,
   },
+  {
+    id: 9,
+    color: "Midnight Teal",
+    colorCode: "#0e95a7",
+    image: null,
+  },
 ];
