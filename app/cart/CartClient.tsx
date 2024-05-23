@@ -1,7 +1,7 @@
 "use client";
 import { useCart } from "@/hooks/useCart";
 import Link from "next/link";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdClear, MdLogin, MdPayment } from "react-icons/md";
 import Heading from "../components/Heading";
 import Button from "../components/Button";
 import ItemContent from "./ItemContent";
@@ -38,10 +38,16 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
     <div>
       <Heading title="Shooping Cart" center />
       <div className="grid grid-cols-5 text-xs gap-4 pb-2 items-center mt-8">
-        <div className="col-span-2 justify-self-start">PRODUCT</div>
-        <div className="justify-self-center">PRICE</div>
-        <div className="justify-self-center">QUANTITY</div>
-        <div className="justify-self-end">TOTAL</div>
+        <div className="col-span-2 justify-self-start text-blue-900 font-bold pl-3">
+          PRODUCT
+        </div>
+        <div className="justify-self-center text-blue-900 font-bold">PRICE</div>
+        <div className="justify-self-center text-blue-900 font-bold">
+          QUANTITY
+        </div>
+        <div className="justify-self-end text-blue-900 font-bold pr-3">
+          TOTAL
+        </div>
       </div>
       <div>
         <div>
@@ -54,15 +60,15 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
           <div className="w-[120px]">
             <Button
               label="Clear Cart"
+              icon={MdClear}
               onClick={() => {
                 handleClearCart();
               }}
               small
-              outline
             />
           </div>
           <div className="text-sm flex flex-col gap-1 items-start">
-            <div className="flex justify-between w-full text-base font-semibold">
+            <div className="flex justify-between w-full text-base font-semibold pr-3">
               <span>Subtotal</span>
               <span>{formatPrice(cartTotalAmout)}</span>
             </div>
@@ -70,6 +76,7 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
               Taxes and shipping calculate at checkout!
             </p>
             <Button
+              icon={currentUser ? MdPayment : MdLogin}
               label={currentUser ? "Checkout" : "Login to Checkout"}
               onClick={() => {
                 currentUser ? router.push("/checkout") : router.push("/login");
@@ -77,7 +84,7 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
             />
             <Link
               href={"/"}
-              className="text-slate-500 flex items-center gap-1 mt-2"
+              className="text-slate-500 flex items-center gap-1 mt-2 font-semibold hover:text-rose-500"
             >
               <MdArrowBack />
               <span>Continue Shooping</span>

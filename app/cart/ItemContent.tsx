@@ -20,7 +20,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
   } = useCart();
   return (
     <div className="grid grid-cols-5 text-xs md:text-sm gap-4 border-t-[1.5px] border-slate-200 py-4 items-center">
-      <div className="col-span-2 justify-self-start flex gap-2 md:gap-4">
+      <div className="col-span-2 justify-self-start flex gap-2 md:gap-4 pl-3">
         <Link href={`/product/${item.id}`}>
           <div className="relative w-[70px] aspect-square">
             <Image
@@ -54,7 +54,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
           handleQuantityDecrease={() => handleCartQtyDecrease(item)}
         />
       </div>
-      <div className="justify-self-end font-semibold">
+      <div className="justify-self-end font-semibold  pr-3">
         {formatPrice(item.price * item.quantity)}
       </div>
     </div>

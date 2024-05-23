@@ -1,5 +1,9 @@
 import Image from "next/image";
 import image_main from "../../public/images/image_main.png";
+import LogoMarioSalazar from "../../public/images/LogoMarioSalazar.gif";
+import "@/css/homepage.css";
+import Link from "next/link";
+
 const HomeBanner = () => {
   return (
     <div
@@ -7,6 +11,20 @@ const HomeBanner = () => {
     from-sky-500 to-sky-700 mb-8"
     >
       <div className="mx-auto px-8 py-12 flex flex-col gap-2 md:flex-row items-center justify-evenly">
+        <div>
+          <div className="box-image">
+            <Link
+              href="https://mario-webpage-salazar.onrender.com/"
+              title="Go to page Mario Salazar"
+            >
+              <Image
+                src={LogoMarioSalazar}
+                alt="Mario Salazar"
+                className="home-image"
+              />
+            </Link>
+          </div>
+        </div>
         <div
           className="
         mb-8

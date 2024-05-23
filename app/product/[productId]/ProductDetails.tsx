@@ -7,10 +7,12 @@ import SetQuantity from "@/app/components/products/SetQuantity";
 import { useCart } from "@/hooks/useCart";
 import { ToastCustom } from "@/utils/ToastMessage";
 import { formatPrice } from "@/utils/formatPrice";
+import { AddCircleOutline } from "@mui/icons-material";
 import { Rating } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { MdCheckCircle } from "react-icons/md";
+import { MdCheckCircle, MdAddShoppingCart, MdVisibility } from "react-icons/md";
 
 interface ProductDetailsProps {
   product: any;
@@ -155,14 +157,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
               <MdCheckCircle className="text-teal-400" size={20} />
               <span>Product Added to cart</span>
             </p>
-            <div className="max-w-[300px]">
+            <Horizontal></Horizontal>
+            <div className="max-w-[300px] m-2 font-semibold">
               <Button
                 label="View cart"
                 outline
+                icon={MdVisibility}
                 onClick={() => {
                   router.push("/cart");
                 }}
-              />
+              ></Button>
             </div>
           </>
         ) : (
@@ -179,17 +183,25 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
               handleQuantityDecrease={handleQuantityDecrease}
             />
             <Horizontal></Horizontal>
-            <div className="max-w-[300px]">
+            <div className="max-w-[300px] m-2 font-semibold">
               <Button
                 outline
                 label="Add to Cart"
+                icon={MdAddShoppingCart}
                 onClick={() => {
                   handleAddProductToCart(cartProduct);
                 }}
               />
             </div>
           </>
-        )}
+        )}{" "}
+        <Link
+          href={"/"}
+          className="text-slate-400 flex items-center mt-3 font-bold hover:text-rose-500"
+        >
+          <AddCircleOutline />
+          <span>Continue Shooping</span>
+        </Link>
       </div>
     </div>
   );
