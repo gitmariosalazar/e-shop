@@ -3,120 +3,118 @@
 import ActionBtn from "@/app/components/ActionBtn";
 import Heading from "@/app/components/Heading";
 import Status from "@/app/components/Status";
-import firebaseApp from "@/libs/firebase";
 import { ToastCustom } from "@/utils/ToastMessage";
 import { formatPrice } from "@/utils/formatPrice";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Product } from "@prisma/client";
+import { Order, User } from "@prisma/client";
 import axios from "axios";
-import { deleteObject, getStorage, ref } from "firebase/storage";
+import moment from "moment";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import {
-  MdCached,
-  MdClose,
-  MdDelete,
+  MdAccessTimeFilled,
+  MdDeliveryDining,
   MdDone,
   MdRemoveRedEye,
 } from "react-icons/md";
-import { toast } from "react-toastify";
 
-interface ManageProductsClientProps {
-  products: Product[];
+interface ManageOrdersClientProps {
+  orders: ExtendedOrder[];
 }
 
-const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
-  products,
-}) => {
+type ExtendedOrder = Order & {
+  user: User;
+};
+
+const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
   let rows: any = [];
-  if (products) {
-    rows = products.map((product) => {
+  if (orders) {
+    rows = orders.map((order) => {
       return {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        category: product.category,
-        brand: product.brand,
-        inStock: product.inStock,
-        images: product.images,
+        id: order.id,
+        customer: order.user.name,
+        amount: formatPrice(order.amount),
+        paymentStatus: order.status,
+        date: moment(order.createDate).fromNow(),
+        deliveryStatus: order.deliveryStatus,
       };
     });
   }
 
   const router = useRouter();
-  const storage = getStorage(firebaseApp);
 
   const columns: GridColDef[] = [
     {
       field: "id",
       headerName: "ID",
-      width: 220,
+      width: 130,
       renderCell: (params) => {
         return <div className="font-bold text-slate-200">{params.row.id}</div>;
       },
     },
     {
-      field: "name",
-      headerName: "Name",
+      field: "customer",
+      headerName: "Customer",
       width: 220,
       renderCell: (params) => {
         return (
-          <div className="font-bold text-slate-200">{params.row.name}</div>
+          <div className="font-bold text-slate-200">{params.row.customer}</div>
         );
       },
     },
     {
-      field: "price",
-      headerName: "Price(USD)",
+      field: "amount",
+      headerName: "Amount(USD)",
       renderCell: (params) => {
         return (
           <div className="font-bold text-slate-200">
-            {formatPrice(params.row.price)}
+            {formatPrice(params.row.amount)}
           </div>
         );
       },
     },
     {
-      field: "category",
-      headerName: "category",
+      field: "paymentStatus",
+      headerName: "Payment Status",
       width: 100,
       renderCell: (params) => {
         return (
-          <div className="font-bold text-slate-200">{params.row.category}</div>
+          <div className="font-bold text-slate-200">
+            {params.row.paymentStatus}
+          </div>
         );
       },
     },
     {
-      field: "brand",
-      headerName: "brand",
-      width: 100,
-      renderCell: (params) => {
-        return (
-          <div className="font-bold text-slate-200">{params.row.brand}</div>
-        );
-      },
-    },
-    {
-      field: "inStock",
-      headerName: "inStock",
+      field: "deliveryStatus",
+      headerName: "Delivery Status",
       width: 120,
       renderCell: (params) => {
         return (
           <div className="flex justify-center items-center">
-            {params.row.inStock == true ? (
+            {params.row.deliveryStatus == "pending" ? (
               <Status
-                text="In Stock"
+                text="pending"
+                icon={MdAccessTimeFilled}
+                bg="bg-slate-200"
+                color="text-slate-700"
+              />
+            ) : params.row.deliveryStatus == "dispatched" ? (
+              <Status
+                text="dispatched"
+                icon={MdDeliveryDining}
+                bg="bg-purple-200"
+                color="text-purple-700"
+              />
+            ) : params.row.deliveryStatus == "delivered" ? (
+              <Status
+                text="delivered"
                 icon={MdDone}
-                bg="bg-teal-200"
-                color="text-teal-700"
+                bg="bg-green-200"
+                color="text-green-700"
               />
             ) : (
-              <Status
-                text="Out of Stock"
-                icon={MdClose}
-                bg="bg-rose-200"
-                color="text-rose-700"
-              />
+              <></>
             )}
           </div>
         );
@@ -133,21 +131,21 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
             title="Change state"
           >
             <ActionBtn
-              icon={MdCached}
+              icon={MdAccessTimeFilled}
               onClick={() => {
-                handleToggleStock(params.row.id, params.row.inStock);
+                handleDispatch(params.row.id);
               }}
             />
             <ActionBtn
-              icon={MdDelete}
+              icon={MdDeliveryDining}
               onClick={() => {
-                handleDelete(params.row.id, params.row.images);
+                handleDeliver(params.row.id, params.row.images);
               }}
             />
             <ActionBtn
               icon={MdRemoveRedEye}
               onClick={() => {
-                router.push(`product/${params.row.id}`);
+                router.push(`order/${params.row.id}`);
               }}
             />
           </div>
@@ -156,17 +154,17 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
     },
   ];
 
-  const handleToggleStock = useCallback(
-    (id: string, inStock: boolean) => {
+  const handleDispatch = useCallback(
+    (id: string) => {
       axios
-        .put("/api/product", {
+        .put("/api/order", {
           id,
-          inStock: !inStock,
+          deliveryStatus: "dispatched",
         })
         .then((res) => {
           ToastCustom(
             "success",
-            "Product status changed",
+            "Order Dispatched!",
             "Message Info",
             "top-right"
           );
@@ -185,30 +183,17 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
     [router]
   );
 
-  const handleDelete = useCallback(
-    async (id: string, images: any[]) => {
-      toast("Deleting product. please wait!");
-      const handleImageDelete = async () => {
-        try {
-          for (const item of images) {
-            if (item.image) {
-              const imageRef = ref(storage, item.image);
-              await deleteObject(imageRef);
-              console.log("Delete images: ", item.image);
-            }
-          }
-        } catch (error) {
-          return console.log("Deleting images error!", error);
-        }
-      };
-      await handleImageDelete();
-
+  const handleDeliver = useCallback(
+    (id: string, deliveryStatus: "delivered") => {
       axios
-        .delete(`/api/product/${id}`)
+        .put("/api/order", {
+          id,
+          deliveryStatus: "delivered",
+        })
         .then((res) => {
           ToastCustom(
             "success",
-            "Product deleted successfully!",
+            "Order Delivered!",
             "Message Info",
             "top-right"
           );
@@ -217,19 +202,20 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
         .catch((err) => {
           ToastCustom(
             "error",
-            "Failed to delete product!",
-            "Message Error",
+            "Oops! Something wen wrong!",
+            "Message Info",
             "top-right"
           );
+          console.log(err);
         });
     },
-    [storage, router]
+    [router]
   );
 
   return (
     <div className="max-w-[1150px] m-auto text-xl">
       <div className="mb-4 mt-0">
-        <Heading title="Manage Products" center />
+        <Heading title="Manage Orders" center />
       </div>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
@@ -248,4 +234,4 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   );
 };
 
-export default ManageProductsClient;
+export default ManageOrdersClient;

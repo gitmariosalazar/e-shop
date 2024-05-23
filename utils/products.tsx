@@ -96,7 +96,7 @@ export const products = [
     price: 875.24,
     brand: "Apple",
     category: "Phone",
-    inStock: true,
+    inStock: false,
     images: [
       {
         id: 4,
@@ -176,7 +176,7 @@ export const products = [
     price: 17.68,
     brand: "logitech",
     category: "Accesories",
-    inStock: true,
+    inStock: false,
     images: [
       {
         id: 7,
@@ -207,7 +207,7 @@ export const products = [
     price: 51.32,
     brand: "Nerunsa",
     category: "Watch",
-    inStock: true,
+    inStock: false,
     images: [
       {
         id: 8,
