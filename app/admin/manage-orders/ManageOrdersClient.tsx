@@ -19,7 +19,7 @@ import {
 } from "react-icons/md";
 
 interface ManageOrdersClientProps {
-  orders: ExtendedOrder[];
+  orders: ExtendedOrder[] | undefined;
 }
 
 type ExtendedOrder = Order & {
@@ -67,20 +67,35 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
       headerName: "Amount(USD)",
       renderCell: (params) => {
         return (
-          <div className="font-bold text-slate-200">
-            {formatPrice(params.row.amount)}
-          </div>
+          <div className="font-bold text-slate-200">{params.row.amount}</div>
         );
       },
     },
+
     {
       field: "paymentStatus",
       headerName: "Payment Status",
-      width: 100,
+      width: 120,
       renderCell: (params) => {
         return (
-          <div className="font-bold text-slate-200">
-            {params.row.paymentStatus}
+          <div className="flex justify-center items-center">
+            {params.row.paymentStatus == "pending" ? (
+              <Status
+                text="pending"
+                icon={MdAccessTimeFilled}
+                bg="bg-slate-200"
+                color="text-slate-700"
+              />
+            ) : params.row.paymentStatus == "complete" ? (
+              <Status
+                text="complete"
+                icon={MdDone}
+                bg="bg-purple-200"
+                color="text-purple-700"
+              />
+            ) : (
+              <></>
+            )}
           </div>
         );
       },
@@ -121,6 +136,11 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
       },
     },
     {
+      field: "createDate",
+      headerName: "Date",
+      width: 130,
+    },
+    {
       field: "action",
       headerName: "Actions",
       width: 150,
@@ -131,15 +151,15 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
             title="Change state"
           >
             <ActionBtn
-              icon={MdAccessTimeFilled}
+              icon={MdDeliveryDining}
               onClick={() => {
                 handleDispatch(params.row.id);
               }}
             />
             <ActionBtn
-              icon={MdDeliveryDining}
+              icon={MdDone}
               onClick={() => {
-                handleDeliver(params.row.id, params.row.images);
+                handleDeliver(params.row.id);
               }}
             />
             <ActionBtn
@@ -177,14 +197,13 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
             "Message Info",
             "top-right"
           );
-          console.log(err);
         });
     },
     [router]
   );
 
   const handleDeliver = useCallback(
-    (id: string, deliveryStatus: "delivered") => {
+    (id: string) => {
       axios
         .put("/api/order", {
           id,
