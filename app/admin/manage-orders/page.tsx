@@ -1,4 +1,3 @@
-import getProducts from "@/actions/GetProducts";
 import Container from "@/app/components/Container";
 import { getCurrentUser } from "@/actions/GetCurrentUser";
 import NullData from "@/app/components/NullData";
