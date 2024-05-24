@@ -18,7 +18,7 @@ import {
   MdRemoveRedEye,
 } from "react-icons/md";
 
-interface ManageOrdersClientProps {
+interface OrdersClientProps {
   orders: ExtendedOrder[] | undefined;
 }
 
@@ -26,7 +26,7 @@ type ExtendedOrder = Order & {
   user: User;
 };
 
-const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
+const OrdersClient: React.FC<OrdersClientProps> = ({ orders }) => {
   let rows: any = [];
   if (orders) {
     rows = orders.map((order) => {
@@ -158,18 +158,6 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
             title="Change state"
           >
             <ActionBtn
-              icon={MdDeliveryDining}
-              onClick={() => {
-                handleDispatch(params.row.id);
-              }}
-            />
-            <ActionBtn
-              icon={MdDone}
-              onClick={() => {
-                handleDeliver(params.row.id);
-              }}
-            />
-            <ActionBtn
               icon={MdRemoveRedEye}
               onClick={() => {
                 router.push(`/order/${params.row.id}`);
@@ -180,63 +168,6 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
       },
     },
   ];
-
-  const handleDispatch = useCallback(
-    (id: string) => {
-      axios
-        .put("/api/order", {
-          id,
-          deliveryStatus: "dispatched",
-        })
-        .then((res) => {
-          ToastCustom(
-            "success",
-            "Order Dispatched!",
-            "Message Info",
-            "top-right"
-          );
-          router.refresh();
-        })
-        .catch((err) => {
-          ToastCustom(
-            "error",
-            "Oops! Something wen wrong!",
-            "Message Info",
-            "top-right"
-          );
-        });
-    },
-    [router]
-  );
-
-  const handleDeliver = useCallback(
-    (id: string) => {
-      axios
-        .put("/api/order", {
-          id,
-          deliveryStatus: "delivered",
-        })
-        .then((res) => {
-          ToastCustom(
-            "success",
-            "Order Delivered!",
-            "Message Info",
-            "top-right"
-          );
-          router.refresh();
-        })
-        .catch((err) => {
-          ToastCustom(
-            "error",
-            "Oops! Something wen wrong!",
-            "Message Info",
-            "top-right"
-          );
-          console.log(err);
-        });
-    },
-    [router]
-  );
 
   return (
     <div className="max-w-[1150px] m-auto text-xl">
@@ -260,4 +191,4 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
   );
 };
 
-export default ManageOrdersClient;
+export default OrdersClient;

@@ -4,6 +4,8 @@ import { Redressed } from "next/font/google";
 import CartCount from "./CartCount";
 import UserMenu from "./UserMenu";
 import { getCurrentUser } from "@/actions/GetCurrentUser";
+import Categories from "./Categories";
+import SearchBar from "./SearchBar";
 
 const redressed = Redressed({ subsets: ["latin"], weight: ["400"] });
 
@@ -33,7 +35,9 @@ const NavBar = async () => {
             <Link href="/" className={`${redressed.className}`}>
               E-Shop Mario Salazar
             </Link>
-            <div className="hidden md:block">Search</div>
+            <div className="hidden md:block">
+              <SearchBar />
+            </div>
             <div
               className="
             flex
@@ -46,6 +50,7 @@ const NavBar = async () => {
           </div>
         </Container>
       </div>
+      <Categories />
     </div>
   );
 };

@@ -9,14 +9,20 @@ interface ListRatingProps {
 }
 
 const ListRating: React.FC<ListRatingProps> = ({ product }) => {
+  if (product.reviews.length === 0) {
+    return null;
+  }
+  const Horizontal = () => {
+    return <hr className="w-[30% my-2]" />;
+  };
   return (
-    <div>
+    <div className="w-full">
       <Heading title="Product Review" />
-      <div className="text-sm mt-2">
+      <div className="text-sm mt-2 w-full">
         {product.reviews &&
           product.reviews.map((review: any) => {
             return (
-              <div key={review.id} className="max-w-[300px]">
+              <div key={review.id} className="w-[300px] bg-slate-800 p-2">
                 <div className="flex gap-2 items-center">
                   <Avatar src={review?.user.image} height={30} width={30} />
                   <div className="font-semibold">{review?.user.name}</div>
@@ -27,8 +33,8 @@ const ListRating: React.FC<ListRatingProps> = ({ product }) => {
                 <div className="mt-2">
                   <Rating value={review.rating} readOnly />
                   <div className="ml-2">{review.comment}</div>
-                  <hr className="mt-4 mb-4" />
                 </div>
+                <Horizontal />
               </div>
             );
           })}
