@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { cookies } from "next/headers";
 
 export type ImageType = {
   color: string;
@@ -67,6 +68,16 @@ const AddProductsForm = () => {
       setIsProductCreatedd(false);
     }
   }, [isProductCreated, setImages, reset]);
+
+  // Función asincrónica para obtener los datos de la cookie
+  async function getCookieData() {
+    const cookieData = cookies().getAll();
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        resolve(cookieData);
+      }, 1000)
+    );
+  }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     //console.log("Product Data", data);

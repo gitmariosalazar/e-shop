@@ -6,12 +6,13 @@ import getOrders from "@/actions/GetOrders";
 
 const ManageOrders = async () => {
   const orders = await getOrders();
+  /*
   const currentUser = await getCurrentUser();
 
   if (!currentUser || currentUser.role != "ADMIN") {
     return <NullData title="Oops! Acces denied!!" />;
   }
-
+*/
   return (
     <div className="pt-8">
       <Container>
