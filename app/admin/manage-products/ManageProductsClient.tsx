@@ -166,7 +166,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
         .then((res) => {
           ToastCustom(
             "success",
-            "Product status changed",
+            "Product status success changed",
             "Message Info",
             "top-right"
           );
