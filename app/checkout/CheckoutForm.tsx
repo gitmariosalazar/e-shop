@@ -1,3 +1,5 @@
+"use client";
+
 import { useCart } from "@/hooks/useCart";
 import { ToastCustom } from "@/utils/ToastMessage";
 import { formatPrice } from "@/utils/formatPrice";
@@ -20,9 +22,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   clientSecret,
   handleSetPaymentSuccess,
 }) => {
-  const stripe = useStripe(); // Llamada al hook useStripe aquí
-  const elements = useElements();
   const { cartTotalAmout, handleSetPaymentIntent, handleClearCart } = useCart();
+  const stripe = useStripe();
+  const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const formattedPrice = formatPrice(cartTotalAmout);
 
