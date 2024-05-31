@@ -1,0 +1,11 @@
+.custom-rating .MuiRating-iconFilled {
+  border-color: #ffffff; /* Color del borde de las estrellas llenas */
+}
+
+.custom-rating .MuiRating-iconEmpty {
+  border-color: #ffffff; /* Color del borde de las estrellas vacías */
+}
+
+.custom-rating .MuiRating-iconHover {
+  border-color: #ffffff; /* Color del borde de las estrellas al pasar el ratón */
+}
