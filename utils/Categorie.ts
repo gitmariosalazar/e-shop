@@ -8,5 +8,5 @@ export const categories = [
   { id: 4, label: "Desktop", icon: AiOutlineDesktop },
   { id: 5, label: "Watch", icon: MdWatch },
   { id: 6, label: "TV", icon: MdTv },
-  { id: 7, label: "Categories", icon: MdOutlineKeyboard },
+  { id: 7, label: "Accessories", icon: MdOutlineKeyboard },
 ];
