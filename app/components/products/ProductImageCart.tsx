@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
 import { useEffect, useState } from "react";
 import { AddShoppingCart, Visibility } from "@mui/icons-material";
+import Status from "../Status";
+import { MdClose, MdDone } from "react-icons/md";
 
 interface ProductImageProps {
   cartProduct: CartProductType;
@@ -146,11 +148,32 @@ const ProductImageCart: React.FC<ProductImageProps> = ({
         >
           <div className="aspect-square overflow-hidden relative"></div>
           <div className="mt-4">{truncateText(product.name)}</div>
-          <div>
+          <div className="flex justify-center items-center w-full bg-slate-400 p-1">
             <Rating value={productRating} readOnly />
           </div>
           <div>{product.reviews.length} Reviews</div>
-          <div className="font-semibold p-2">{formatPrice(product.price)}</div>
+          <div className="flex w-full items-center justify-center">
+            <div className="font-bold flex justify-center items-start w-full">
+              {formatPrice(product.price)}
+            </div>
+            <div className="mb-4 flex justify-center items-end w-full">
+              {product.inStock == true ? (
+                <Status
+                  text="In Stock"
+                  icon={MdDone}
+                  bg="bg-teal-200"
+                  color="text-teal-700"
+                />
+              ) : (
+                <Status
+                  text="Out of Stock"
+                  icon={MdClose}
+                  bg="bg-rose-200"
+                  color="text-rose-700"
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

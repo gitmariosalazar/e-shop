@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col justify-between p-1">
       <div>
         <ProductImageCart
           cartProduct={cartProduct}

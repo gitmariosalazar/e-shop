@@ -22,7 +22,7 @@ const Categories = () => {
     <div className="bg-slate-800">
       <Container>
         <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto">
-          {categories.map((item) => (
+          {categories.map((item: any) => (
             <div key={item.id}>
               <Category
                 key={item.label}
