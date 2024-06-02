@@ -6,6 +6,9 @@ import UserMenu from "./UserMenu";
 import { getCurrentUser } from "@/actions/GetCurrentUser";
 import Categories from "./Categories";
 import SearchBar from "./SearchBar";
+import Image from "next/image";
+import LogoMarioSalazar from "@/public/images/LogoMarioSalazar.gif";
+import "@/css/homepage.css";
 
 const redressed = Redressed({ subsets: ["latin"], weight: ["400"] });
 
@@ -32,7 +35,15 @@ const NavBar = async () => {
           gap-3
           md-gap-0"
           >
-            <Link href="/" className={`${redressed.className}`}>
+            <Link
+              href="/"
+              className={`${redressed.className} flex flex-row justify-between items-center hover:text-red-500`}
+            >
+              <Image
+                src={LogoMarioSalazar}
+                alt="Mario Salazar"
+                className="homeimage"
+              />
               E-Shop Mario Salazar
             </Link>
             <div className="hidden md:block">
