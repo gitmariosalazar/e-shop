@@ -21,3 +21,5 @@ const AddProducts = async () => {
 };
 
 export default AddProducts;
+
+export const dynamic = "force-dynamic";

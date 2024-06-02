@@ -23,3 +23,5 @@ const ManageProducts = async () => {
 };
 
 export default ManageProducts;
+
+export const dynamic = "force-dynamic";

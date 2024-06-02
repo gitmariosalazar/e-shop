@@ -15,3 +15,5 @@ const Login = async () => {
 };
 
 export default Login;
+
+export const dynamic = "force-dynamic";

@@ -3,3 +3,5 @@ const Admin = () => {
 };
 
 export default Admin;
+
+export const dynamic = "force-dynamic";

@@ -33,3 +33,5 @@ const Product = async ({ params }: { params: IParams }) => {
 };
 
 export default Product;
+
+export const dynamic = "force-dynamic";

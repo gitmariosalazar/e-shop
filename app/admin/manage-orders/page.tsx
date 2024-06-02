@@ -22,3 +22,5 @@ const ManageOrders = async () => {
 };
 
 export default ManageOrders;
+
+export const dynamic = "force-dynamic";

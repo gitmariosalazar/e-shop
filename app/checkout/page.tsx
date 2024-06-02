@@ -15,3 +15,5 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+export const dynamic = "force-dynamic";

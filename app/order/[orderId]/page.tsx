@@ -21,3 +21,5 @@ const Order = async ({ params }: { params: IParams }) => {
 };
 
 export default Order;
+
+export const dynamic = "force-dynamic";

@@ -14,3 +14,5 @@ const Cart = async () => {
 };
 
 export default Cart;
+
+export const dynamic = "force-dynamic";

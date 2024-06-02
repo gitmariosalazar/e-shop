@@ -15,3 +15,5 @@ const Register = async () => {
 };
 
 export default Register;
+
+export const dynamic = "force-dynamic";
