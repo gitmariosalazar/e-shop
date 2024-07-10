@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import Image from "next/image";
 import Container from "./components/Container";
 import HomeBanner from "./components/HomeBanner";

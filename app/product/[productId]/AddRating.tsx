@@ -97,11 +97,9 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
     return review.userId == user.id;
   });
 
-  /*
   if (userReview || !deliveredOrder) {
     return null;
   }
-  */
 
   return (
     <div className="flex flex-col gap-2 max-w-[500px]">
